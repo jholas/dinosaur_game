@@ -12,9 +12,13 @@ const SAVE_KEY: String = "high_score"
 @onready var high_score_label: Label = $HighScoreLabel
 @onready var game_over_panel: Control = $GameOverPanel
 @onready var retry_button: Button = $GameOverPanel/RetryButton
+@onready var milestone_sound: AudioStreamPlayer = $MilestoneSound
+
+const MILESTONE_INTERVAL: int = 100
 
 var _current_score: int = 0
 var _high_score: int = 0
+var _last_milestone: int = 0
 
 signal retry_requested
 
@@ -37,6 +41,7 @@ func set_score(score: int) -> void:
 	_current_score = score
 	if _current_score > _high_score:
 		_high_score = _current_score
+	_check_milestone()
 	_update_labels()
 
 
@@ -46,6 +51,7 @@ func get_score() -> int:
 
 func reset() -> void:
 	_current_score = 0
+	_last_milestone = 0
 	game_over_panel.hide()
 	_update_labels()
 
@@ -58,6 +64,13 @@ func show_game_over() -> void:
 func _update_labels() -> void:
 	score_label.text = "%05d" % _current_score
 	high_score_label.text = "HI %05d" % _high_score
+
+
+func _check_milestone() -> void:
+	var milestone: int = (_current_score / MILESTONE_INTERVAL) * MILESTONE_INTERVAL
+	if milestone > _last_milestone:
+		_last_milestone = milestone
+		milestone_sound.play()
 
 
 func _load_high_score() -> void:

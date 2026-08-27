@@ -15,6 +15,8 @@ const DUCK_THRESHOLD: float = 0.70
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var standing_collision: CollisionShape2D = $StandingCollision
 @onready var ducking_collision: CollisionShape2D = $DuckingCollision
+@onready var jump_sound: AudioStreamPlayer = $JumpSound
+@onready var die_sound: AudioStreamPlayer = $DieSound
 
 var is_dead: bool = false
 var is_ducking: bool = false
@@ -37,6 +39,7 @@ func _physics_process(delta: float) -> void:
 		if _jump_requested:
 			velocity.y = JUMP_VELOCITY
 			_set_ducking(false)
+			jump_sound.play()
 	else:
 		velocity.y += GRAVITY * delta
 	_jump_requested = false
@@ -105,4 +108,5 @@ signal died
 func die() -> void:
 	is_dead = true
 	animated_sprite.stop()
+	die_sound.play()
 	emit_signal("died")
