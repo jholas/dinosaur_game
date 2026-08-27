@@ -1,0 +1,7 @@
+# Godot 4 build artifacts
+.godot/
+*.import
+export_presets.cfg
+android/
+# Editor-generated metadata (optional – commit if you want consistent UIDs)
+# .uid
