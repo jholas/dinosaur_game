@@ -8,8 +8,8 @@ enum GameState { IDLE, RUNNING, GAME_OVER }
 
 # Night-mode colour transition every 700 points.
 const NIGHT_MODE_INTERVAL: int = 700
-const BG_DAY_COLOR: Color = Color("#F7F7F7")
-const BG_NIGHT_COLOR: Color = Color("#202124")
+const BG_DAY_COLOR: Color = Color("#FFFFFF")
+const BG_NIGHT_COLOR: Color = Color("#202020")
 const COLOR_TRANSITION_TIME: float = 1.5
 
 @onready var dino: CharacterBody2D = $Dino

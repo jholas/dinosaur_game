@@ -1,6 +1,46 @@
-[gd_scene load_steps=2 format=3 uid="uid://cactus_scene"]
+[gd_scene load_steps=7 format=3 uid="uid://cactus_scene"]
 
 [ext_resource type="Script" path="res://scripts/cactus.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/cactus.png" id="2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_small_single"]
+atlas = ExtResource("2")
+region = Rect2(0, 0, 236, 723)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_large_single"]
+atlas = ExtResource("2")
+region = Rect2(461, 0, 266, 723)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cluster"]
+atlas = ExtResource("2")
+region = Rect2(1091, 0, 419, 723)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cactus"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cluster")
+}],
+"loop": true,
+"name": &"cluster",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_large_single")
+}],
+"loop": true,
+"name": &"large_single",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_small_single")
+}],
+"loop": true,
+"name": &"small_single",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(30, 60)
@@ -11,6 +51,9 @@ collision_mask = 1
 script = ExtResource("1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.166, 0.166)
+sprite_frames = SubResource("SpriteFrames_cactus")
+animation = &"small_single"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_1")

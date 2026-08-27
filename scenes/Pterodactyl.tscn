@@ -1,6 +1,58 @@
-[gd_scene load_steps=2 format=3 uid="uid://ptero_scene"]
+[gd_scene load_steps=8 format=3 uid="uid://ptero_scene"]
 
 [ext_resource type="Script" path="res://scripts/pterodactyl.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/pterodactyl.png" id="2"]
+
+[sub_resource type="Shader" id="Shader_keyblack"]
+code = "shader_type canvas_item;
+
+void fragment() {
+	vec4 tex_color = texture(TEXTURE, UV);
+	float luminance = max(tex_color.r, max(tex_color.g, tex_color.b));
+	if (luminance < 0.08) {
+		tex_color.a = 0.0;
+	}
+	COLOR = tex_color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_keyblack"]
+shader = SubResource("Shader_keyblack")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly1"]
+atlas = ExtResource("2")
+region = Rect2(0, 0, 519, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly2"]
+atlas = ExtResource("2")
+region = Rect2(519, 0, 561, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly3"]
+atlas = ExtResource("2")
+region = Rect2(1080, 0, 526, 724)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fly4"]
+atlas = ExtResource("2")
+region = Rect2(1606, 0, 566, 724)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ptero"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fly4")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 6.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(60, 30)
@@ -11,6 +63,10 @@ collision_mask = 1
 script = ExtResource("1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_keyblack")
+scale = Vector2(0.152, 0.152)
+sprite_frames = SubResource("SpriteFrames_ptero")
+animation = &"fly"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_1")
